@@ -12,7 +12,6 @@ metamod:
 
 stripper:
         all files
-  
 
 11mode:
       a mode for 1 VS 1
