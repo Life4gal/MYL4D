@@ -27,7 +27,7 @@ FF_damage <-{};
 PZ_kill <-{};
 HP_hard <-{};
 HP_tmp <-{};
-
+IsHanging <-{};		// 0 = false  1 = true
 
 function OnGameEvent_round_start(params)
 {
@@ -37,6 +37,7 @@ function OnGameEvent_round_start(params)
 		PZ_kill[i] <- 0;
 		HP_hard[i] <- 0;
 		HP_tmp[i] <- 0;
+		IsHanging[i] <- 0;
 	}
 }
 
@@ -53,6 +54,7 @@ function OnGameEvent_player_team(params)
 		PZ_kill[Player.GetEntityIndex()] = 0;
 		HP_hard[Player.GetEntityIndex()] = 100;
 		HP_tmp[Player.GetEntityIndex()] = 0;
+		IsHanging[Player.GetEntityIndex()] = 0;
 	}
 }
 
@@ -66,7 +68,8 @@ function OnGameEvent_player_death(params)
 	}
 }
 
-function OnGameEvent_player_hurt(params){ //friendly fire damage
+function OnGameEvent_player_hurt(params)
+{
 	local attacker = GetPlayerFromUserID(params.attacker);
 	local victim = GetPlayerFromUserID(params.userid);
 	local damage = 0;
@@ -75,6 +78,46 @@ function OnGameEvent_player_hurt(params){ //friendly fire damage
 	if(damage > 0)
 	{
 		FF_damage[attacker.GetEntityIndex()] += damage;
+	}
+}
+
+function OnGameEvent_player_ledge_grab(params)
+{
+	local victim = GetPlayerFromUserID(params.userid);
+	if(victim.IsSurvivor())
+	{
+		IsHanging[victim.GetEntityIndex()] = 1;
+	}
+}
+
+function OnGameEvent_player_ledge_release(params)
+{
+	local victim = GetPlayerFromUserID(params.userid);
+	if(victim.IsSurvivor())
+	{
+		IsHanging[victim.GetEntityIndex()] = 0;
+	}
+}
+
+function OnGameEvent_revive_success(params)
+{
+	local victim = GetPlayerFromUserID(params.subject);
+	local ledge = false;
+	ledge = params["ledge_hang"];
+	if(victim.IsSurvivor() && ledge)
+	{
+		IsHanging[victim.GetEntityIndex()] = 0;
+	}
+}
+
+function OnGameEvent_revive_end(params)
+{
+	local victim = GetPlayerFromUserID(params.subject);
+	local ledge = false;
+	ledge = params["ledge_hang"];
+	if(victim.IsSurvivor() && ledge)
+	{
+		IsHanging[victim.GetEntityIndex()] = 0;
 	}
 }
 
@@ -115,15 +158,18 @@ function Update()
 			::_StrShow_pz += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName().slice(0, 12) + " : " + PZ_kill[index[i]];
 			if(PlayerInstanceFromIndex(index[i]).IsIncapacitated())
 			{
-				::_StrShow_hp += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName().slice(0, 12) + " : DOWN";
+				if(IsHanging[index[i]])
+				{
+					::_StrShow_hp += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName().slice(0, 12) + " : Hanging HP: " + HP_hard[index[i]];
+				}
+				else
+				{
+					::_StrShow_hp += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName().slice(0, 12) + " : DOWN HP: " + HP_hard[index[i]];
+				}
 			}
 			else if(PlayerInstanceFromIndex(index[i]).IsDead())
 			{
 				::_StrShow_hp += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName().slice(0, 12) + " : DEAD";
-			}
-			else if(PlayerInstanceFromIndex(index[i]).IsHangingFromLedge())
-			{
-				::_StrShow_hp += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName().slice(0, 12) + " : Hanging";
 			}
 			else
 			{
@@ -135,15 +181,18 @@ function Update()
 			::_StrShow_pz += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName() + " : " + PZ_kill[index[i]];
 			if(PlayerInstanceFromIndex(index[i]).IsIncapacitated())
 			{
-				::_StrShow_hp += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName() + " : DOWN";
+				if(IsHanging[index[i]])
+				{
+					::_StrShow_hp += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName() + " : Hanging HP: " + HP_hard[index[i]];
+				}
+				else
+				{
+					::_StrShow_hp += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName() + " : DOWN HP: " + HP_hard[index[i]];
+				}
 			}
 			else if(PlayerInstanceFromIndex(index[i]).IsDead())
 			{
 				::_StrShow_hp += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName() + " : DEAD";
-			}
-			else if(PlayerInstanceFromIndex(index[i]).IsHangingFromLedge())
-			{
-				::_StrShow_hp += "\n" + PlayerInstanceFromIndex(index[i]).GetPlayerName() + " : Hanging";
 			}
 			else
 			{
@@ -176,7 +225,7 @@ function CustomHud()
 		}
 	}
 	HUDSetLayout(HUDINFO);
-	HUDPlace(HUD_FAR_LEFT,0.0,0.0,0.4,0.6);
-	HUDPlace(HUD_FAR_RIGHT,0.5,0.02,0.4,0.6);
-	HUDPlace(HUD_MID_TOP,0.25,0.02,0.4,0.6);
+	HUDPlace(HUD_FAR_LEFT,0.0,0.02,1.0,0.05);
+	HUDPlace(HUD_FAR_RIGHT,0.5,0.02,0.4,0.05);
+	HUDPlace(HUD_MID_TOP,0.25,0.02,0.4,0.05);
 }
