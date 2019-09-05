@@ -94,9 +94,9 @@ public Action:Event_Playerteam(Handle:event, const String:name[], bool:dontBroad
 	{
 		if (IsClientConnected(i) && IsClientInGame(i))
 		{
-				
+
 			GetClientAuthId(i, AuthId_Steam2, id, sizeof(id));
-			if ((StrEqual(id, "BOT")))	
+			if ((StrEqual(id, "BOT")))
 			{
 				KickClient(i);
 			}
@@ -108,9 +108,10 @@ public Action:Event_Roundstart(Handle:event, const String:name[], bool:dontBroad
 	for(new i = 1; i < MaxClients; i++){
 		i_count[i] = 0;
 	}
+	SetConVarInt(FindConVar("director_no_death_check"), 1);
 }
 
-public Action:OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &damagetype) 
+public Action:OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &damagetype)
 {
 	if(GetClientTeam(attacker) == 3 && !takeDamage){
 		damage = GetConVarFloat(h_Damage);
@@ -152,7 +153,7 @@ stock CheatCommand(client, const String:command[], const String:arguments[]){
 	SetCommandFlags(command, flags & ~FCVAR_CHEAT);
 	FakeClientCommand(client, "%s %s", command, arguments);
 	SetCommandFlags(command, flags);
-	SetUserFlagBits(client, admindata);  
+	SetUserFlagBits(client, admindata);
 }
 
 public Action:RevivePlayer2(Handle:timer, any:client){
