@@ -1,311 +1,311 @@
 director:
-	director_adrenaline_density				: 6.48     : Items per 100 yards square
-	director_afk_timeout					: 45       : Humans idle longer than this many seconds will be forced to spectator mode
-	director_allow_infected_bots			: 1        : Allow bots to fill empty slots on the infected team
-	director_ammo_density					: 6.48     : Items per 100 yards square
-	director_convert_pills_critical_health	: 50       : /*don't konw effect*/
-	director_convert_pills_to_defib_health	: 25       : /*don't konw effect*/
-***	director_force_panic_event				: cmd      : Forces a 'PanicEvent' to occur
-*	director_force_tank						: 0        : /*create this quantity of tank?*/
-	director_force_versus_start				: cmd      : Force start the versus game, so PZs can spawn even if survivors are still in the safe room
-*	director_force_witch					: 0        : /*create this quantity of witch?*/
-	director_gas_can_density				: 6.48     : Items per 100 yards square
-***	director_intensity_relax_threshold		: 0.9      : All survivors must be below this intensity before a Peak is allowed to switch to Relax (in addition to the normal peak timer)
-	director_magnum_spawn_density			: -1.0     : Items per 100 yards square (-1 to spawn all)
-	director_melee_weapon_density			: 6.48     : Items per 100 yards square
-	director_min_start_players				: 1        : Freezes players until this # of players have joined, then starts mission
-	director_molotov_density				: 6.48     : Items per 100 yards square
-*	director_music_dynamic_mob_size			: 25       : Spawning a mob this large can play music
-*	director_music_dynamic_mobstop_size		: 8        : When a mob gets to this size we think about stopping the music
-*	director_music_dynamic_scanmobstop_size	: 3        : When see less than this many of a mob, music stops
-*	director_no_bosses						: 0        : Disable boss spawns(include tank and witch)
-***	director_no_death_check					: 0        : Disable survivor team death ending scenario
-*	director_no_mobs						: 0        : Disable mob rushes
-**	director_no_specials					: 0        : Disable PZ spawns
-	director_no_survivor_bots				: 0        : Disable filling out the survivor team with bots
-	director_oxygen_tank_density			: 6.48     : Items per 100 yards square
-	director_pain_pill_density				: 6.48     : Items per 100 yards square
-***	director_panic_forever					: 0        : Panic events never end	/*This seems to only work in gauntlets.*/
-	director_per_map_weapon_upgrade_chance	: 0.25     :
-	director_pipe_bomb_density				: 6.48     : Items per 100 yards square
-	director_pistol_density					: 4        : Items per 100 yards square
-	director_propane_tank_density			: 6.48     : Items per 100 yards square
-*	director_ready_duration					: 60       : If nonzero, survivor team has this amount of time to get ready before starting out
-*	director_ready_radius					: 300      : The distance survivors can move from the starting weapons during the ready period
-***	director_relax_max_flow_travel			: 3000     : How far the survivors can advance along the flow before transitioning from RELAX to BUILD_UP.
-***	director_relax_max_interval				: 45       : Maximum time to spend in the RELAX tempo.
-***	director_relax_min_interval				: 30       : Minimum time to spend in the RELAX tempo.
-**	director_start							: cmd      : Restores spawning of all wanderers, mobs, specials, and bosses
-**	director_stop							: cmd      : Shuts off all wanderers, mobs, specials, and bosses
-	director_super_weapon_density			: 6.48     : Items per 100 yards square
-*	director_tank_checkpoint_interval		: 15       : Min time after leaving a checkpoint that a tank can spawn
-**	director_tank_force_offer				: 0        : Forces the director to offer a tank
-**	director_tank_max_interval				: 500      :
-**	director_tank_min_interval				: 350      :
-	director_upgradepack_density			: 6.48     : Items per 100 yards square
-	director_vomitjar_density				: 6.48     : Items per 100 yards square
-	director_vs_convert_pills				: 0.5      : What fraction of pain pills should be converted to health kits in vs mode
+	director_adrenaline_density				: 6.48		: Items per 100 yards square
+	director_afk_timeout					: 45		: Humans idle longer than this many seconds will be forced to spectator mode
+	director_allow_infected_bots			: 1			: Allow bots to fill empty slots on the infected team
+	director_ammo_density					: 6.48		: Items per 100 yards square
+	director_convert_pills_critical_health	: 50		: /*don't konw effect*/
+	director_convert_pills_to_defib_health	: 25		: /*don't konw effect*/
+***	director_force_panic_event				: cmd		: Forces a 'PanicEvent' to occur
+*	director_force_tank						: 0			: /*create this quantity of tank?*/
+	director_force_versus_start				: cmd		: Force start the versus game, so PZs can spawn even if survivors are still in the safe room
+*	director_force_witch					: 0			: /*create this quantity of witch?*/
+	director_gas_can_density				: 6.48		: Items per 100 yards square
+***	director_intensity_relax_threshold		: 0.9		: All survivors must be below this intensity before a Peak is allowed to switch to Relax (in addition to the normal peak timer)
+	director_magnum_spawn_density			: -1.0		: Items per 100 yards square (-1 to spawn all)
+	director_melee_weapon_density			: 6.48		: Items per 100 yards square
+	director_min_start_players				: 1			: Freezes players until this # of players have joined, then starts mission
+	director_molotov_density				: 6.48		: Items per 100 yards square
+*	director_music_dynamic_mob_size			: 25		: Spawning a mob this large can play music
+*	director_music_dynamic_mobstop_size		: 8			: When a mob gets to this size we think about stopping the music
+*	director_music_dynamic_scanmobstop_size	: 3			: When see less than this many of a mob, music stops
+*	director_no_bosses						: 0			: Disable boss spawns(include tank and witch)
+***	director_no_death_check					: 0			: Disable survivor team death ending scenario
+*	director_no_mobs						: 0			: Disable mob rushes
+**	director_no_specials					: 0			: Disable PZ spawns
+	director_no_survivor_bots				: 0			: Disable filling out the survivor team with bots
+	director_oxygen_tank_density			: 6.48		: Items per 100 yards square
+	director_pain_pill_density				: 6.48		: Items per 100 yards square
+***	director_panic_forever					: 0			: Panic events never end	/*This seems to only work in gauntlets.*/
+	director_per_map_weapon_upgrade_chance	: 0.25		:
+	director_pipe_bomb_density				: 6.48		: Items per 100 yards square
+	director_pistol_density					: 4			: Items per 100 yards square
+	director_propane_tank_density			: 6.48		: Items per 100 yards square
+*	director_ready_duration					: 60		: If nonzero, survivor team has this amount of time to get ready before starting out
+*	director_ready_radius					: 300		: The distance survivors can move from the starting weapons during the ready period
+***	director_relax_max_flow_travel			: 3000		: How far the survivors can advance along the flow before transitioning from RELAX to BUILD_UP.
+***	director_relax_max_interval				: 45		: Maximum time to spend in the RELAX tempo.
+***	director_relax_min_interval				: 30		: Minimum time to spend in the RELAX tempo.
+**	director_start							: cmd		: Restores spawning of all wanderers, mobs, specials, and bosses
+**	director_stop							: cmd		: Shuts off all wanderers, mobs, specials, and bosses
+	director_super_weapon_density			: 6.48		: Items per 100 yards square
+*	director_tank_checkpoint_interval		: 15		: Min time after leaving a checkpoint that a tank can spawn
+**	director_tank_force_offer				: 0			: Forces the director to offer a tank
+**	director_tank_max_interval				: 500		:
+**	director_tank_min_interval				: 350		:
+	director_upgradepack_density			: 6.48		: Items per 100 yards square
+	director_vomitjar_density				: 6.48		: Items per 100 yards square
+	director_vs_convert_pills				: 0.5		: What fraction of pain pills should be converted to health kits in vs mode
 
 item:
 	adrenaline:
-		adrenaline_backpack_speedup				: 0.5      : Percent of normal backpack item use duration to use when affected by Adrenaline
-		adrenaline_duration						: 15.0f    :
-		adrenaline_health_buffer				: 25       :
-		adrenaline_revive_speedup				: 0.5      : Percent of normal revive duration to use when affected by Adrenaline
-		adrenaline_run_speed					: 260      :
+		adrenaline_backpack_speedup			: 0.5		: Percent of normal backpack item use duration to use when affected by Adrenaline
+		adrenaline_duration					: 15.0f		:
+		adrenaline_health_buffer			: 25		:
+		adrenaline_revive_speedup			: 0.5		: Percent of normal revive duration to use when affected by Adrenaline
+		adrenaline_run_speed				: 260		:
 
 	first aid:
-		first_aid_heal_percent					: 0.8      : Percent of injuries to heal
-		first_aid_kit_max_heal					: 100      :
-		first_aid_kit_use_duration 				: 5        :
-		first_aid_kit_view_duration				: 0.5      : time it takes to rotate the view when healing others
+		first_aid_heal_percent				: 0.8		: Percent of injuries to heal
+		first_aid_kit_max_heal				: 100		:
+		first_aid_kit_use_duration			: 5			:
+		first_aid_kit_view_duration			: 0.5		: time it takes to rotate the view when healing others
 
 	pill:
-		pain_pills_decay_rate      				: 0.27     : Decrease per second
-		pain_pills_health_threshold				: 99       : Pills can't be used unless total health is less than this amount
-		pain_pills_health_value    				: 50       :
+		pain_pills_decay_rate				: 0.27		: Decrease per second
+		pain_pills_health_threshold			: 99		: Pills can't be used unless total health is less than this amount
+		pain_pills_health_value				: 50		:
 
 	grenade launcher:
-		grenadelauncher_damage          		: 400      :
-		grenadelauncher_ff_scale        		: 0.12     : ff scale for grenade launcher damage to other players
-		grenadelauncher_ff_scale_self   		: 0.12     : ff scale for grenade launcher damage to other players
-		grenadelauncher_force_kill      		: 2000.0   :
-		grenadelauncher_radius_kill     		: 180      :
-		grenadelauncher_radius_stumble  		: 250      :
-		grenadelauncher_velocity        		: 1200     :
+		grenadelauncher_damage				: 400		:
+		grenadelauncher_ff_scale			: 0.12		: ff scale for grenade launcher damage to other players
+		grenadelauncher_ff_scale_self		: 0.12		: ff scale for grenade launcher damage to other players
+		grenadelauncher_force_kill			: 2000.0	:
+		grenadelauncher_radius_kill			: 180		:
+		grenadelauncher_radius_stumble		: 250		:
+		grenadelauncher_velocity			: 1200		:
 
 	molotov:
-		inferno_damage                         	: 40       : Damage per second	/*expert mode*/
-		inferno_flame_lifetime                 	: 15       : Average lifetime of each flame in seconds
-		inferno_flame_spacing                  	: 50       : Minimum distance between separate flame spawns
-		inferno_forward_reduction_factor       	: 0.9      :
-		inferno_friendly_fire_duration         	: 6        : For this long, FF is credited back to the thrower.
-		inferno_initial_spawn_interval         	: 0.05     : Time between spawning flames for first fire
-		inferno_max_child_spawn_interval       	: 1        : Largest time interval for child flame spawning
-		inferno_max_flames                     	: 32       : Maximum number of flames that can be created
-		inferno_max_range                      	: 500      : Maximum distance flames can spread from their initial ignition point
-		inferno_max_trace_per_tick             	: 16       :
-		inferno_per_flame_spawn_duration       	: 5        : Duration each new flame will attempt to spawn new flames
-		inferno_velocity_decay_factor          	: 0.2      :
+		inferno_damage						: 40		: Damage per second	/*expert mode*/
+		inferno_flame_lifetime				: 15		: Average lifetime of each flame in seconds
+		inferno_flame_spacing				: 50		: Minimum distance between separate flame spawns
+		inferno_forward_reduction_factor	: 0.9		:
+		inferno_friendly_fire_duration		: 6			: For this long, FF is credited back to the thrower.
+		inferno_initial_spawn_interval		: 0.05		: Time between spawning flames for first fire
+		inferno_max_child_spawn_interval	: 1			: Largest time interval for child flame spawning
+		inferno_max_flames					: 32		: Maximum number of flames that can be created
+		inferno_max_range					: 500		: Maximum distance flames can spread from their initial ignition point
+		inferno_max_trace_per_tick			: 16		:
+		inferno_per_flame_spawn_duration	: 5			: Duration each new flame will attempt to spawn new flames
+		inferno_velocity_decay_factor		: 0.2		:
 
 	pipe bomb:
-		pipe_bomb_beep_interval_delta  			: 0.025    :
-		pipe_bomb_beep_min_interval    			: 0.1      :
-		pipe_bomb_initial_beep_interval			: 0.5      :
-		pipe_bomb_shake_amplitude      			: 50       :
-		pipe_bomb_shake_radius         			: 750      :
-		pipe_bomb_timer_duration       			: 6        :
+		pipe_bomb_beep_interval_delta		: 0.025		:
+		pipe_bomb_beep_min_interval			: 0.1		:
+		pipe_bomb_initial_beep_interval		: 0.5		:
+		pipe_bomb_shake_amplitude			: 50		:
+		pipe_bomb_shake_radius				: 750		:
+		pipe_bomb_timer_duration			: 6			:
 
 	vomitjar:
-		vomitjar_duration_infected_bot       	: 20       :
-		vomitjar_duration_infected_pz        	: 20       :
-		vomitjar_duration_survivor           	: 5        :
-		vomitjar_radius                      	: 110      :
+		vomitjar_duration_infected_bot		: 20		:
+		vomitjar_duration_infected_pz		: 20		:
+		vomitjar_duration_survivor			: 5			:
+		vomitjar_radius						: 110		:
 
 	melee:
-		melee_collateral_shove_count       		: 16       :
-		melee_combo_reset_time             		: 1.2      : Seconds after a swing until we reset the combo activities
-		melee_range                        		: 70       : Melee attack range
+		melee_collateral_shove_count		: 16		:
+		melee_combo_reset_time				: 1.2		: Seconds after a swing until we reset the combo activities
+		melee_range							: 70		: Melee attack range
 
 	ammo:
-		ammo_adrenaline_max						: 1        :
-		ammo_ammo_pack_max						: 1        :
-		ammo_assaultrifle_max					: 360      :
-		ammo_autoshotgun_max					: 90       :
-		ammo_chainsaw_max						: 20       :
-		ammo_firstaid_max						: -1       :
-		ammo_grenadelauncher_max				: 30       :
-		ammo_huntingrifle_max					: 150      :
-		ammo_m60_max							: 0        :
-		ammo_minigun_max						: 800      :
-		ammo_molotov_max						: 1        :
-		ammo_pack_use_duration					: 3        :
-		ammo_painpills_max						: 1        :
-		ammo_pipebomb_max						: 1        :
-		ammo_pistol_max							: -2       :
-		ammo_shotgun_max						: 56       :
-		ammo_smg_max							: 650      :
-		ammo_sniperrifle_max					: 180      :
+		ammo_adrenaline_max					: 1			:
+		ammo_ammo_pack_max					: 1			:
+		ammo_assaultrifle_max				: 360		:
+		ammo_autoshotgun_max				: 90		:
+		ammo_chainsaw_max					: 20		:
+		ammo_firstaid_max					: -1		:
+		ammo_grenadelauncher_max			: 30		:
+		ammo_huntingrifle_max				: 150		:
+		ammo_m60_max						: 0			:
+		ammo_minigun_max					: 800		:
+		ammo_molotov_max					: 1			:
+		ammo_pack_use_duration				: 3			:
+		ammo_painpills_max					: 1			:
+		ammo_pipebomb_max					: 1			:
+		ammo_pistol_max						: -2		:
+		ammo_shotgun_max					: 56		:
+		ammo_smg_max						: 650		:
+		ammo_sniperrifle_max				: 180		:
 		===================turret===================
-		ammo_turret_infected_damage				: 15       : Turret damage per shot against the horde (turret fires at 10Hz)
-		ammo_turret_max							: 300      :
-		ammo_turret_pz_damage					: 8        : Turret damage per shot against player zombies (turret fires at 10Hz)
-		ammo_turret_survivor_damage				: 1        : Turret damage per shot against survivors (turret fires at 10Hz)
-		ammo_turret_tank_damage					: 40       : Turret damage per shot against tanks (turret fires at 10Hz)
-		ammo_turret_witch_damage				: 16       : Turret damage per shot against witches (turret fires at 10Hz)
+		ammo_turret_infected_damage			: 15		: Turret damage per shot against the horde (turret fires at 10Hz)
+		ammo_turret_max						: 300		:
+		ammo_turret_pz_damage				: 8			: Turret damage per shot against player zombies (turret fires at 10Hz)
+		ammo_turret_survivor_damage			: 1			: Turret damage per shot against survivors (turret fires at 10Hz)
+		ammo_turret_tank_damage				: 40		: Turret damage per shot against tanks (turret fires at 10Hz)
+		ammo_turret_witch_damage			: 16		: Turret damage per shot against witches (turret fires at 10Hz)
 		===================turret===================
-		ammo_vomitjar_max						: 1        :
+		ammo_vomitjar_max					: 1			:
 
 specials:
-	z_attack_infected_it_damage  				: 10       : Damage done per claw hit by infected on other infected who are IT
-	z_attack_pz_it_damage        				: 20       : Damage done by infected on IT PZs
-	z_attack_change_target_range 				: 100      :
-	z_attack_incapacitated_damage				: 10       :
-	z_attack_interval            				: 1        :
-	z_attack_max_range           				: 20       :
-	z_attack_min_range           				: 10       :
-	z_attack_movement_penalty    				: 0.5      :
+	z_attack_infected_it_damage				: 10		: Damage done per claw hit by infected on other infected who are IT
+	z_attack_pz_it_damage					: 20		: Damage done by infected on IT PZs
+	z_attack_change_target_range			: 100		:
+	z_attack_incapacitated_damage			: 10		:
+	z_attack_interval						: 1			:
+	z_attack_max_range						: 20		:
+	z_attack_min_range						: 10		:
+	z_attack_movement_penalty				: 0.5		:
 	tank:
-		tank_attack_range                		: 50       : Distance from Survivor that tank triggers own swing.
-		tank_burn_duration               		: 75       : Number of seconds a burning Tank takes to die in easy, normal
-		tank_burn_duration_expert        		: 85       : Number of seconds a burning Tank takes to die in expert
-		tank_burn_duration_hard          		: 80       : Number of seconds a burning Tank takes to die in hard
-		tank_fist_radius                 		: 15       :
-		tank_swing_arc               			: 180      :
-		tank_swing_duration          			: 0.2      : Duration of the actual swing
-		tank_swing_fast_interval     			: 0.6      : Interval between tank swings when he is clearing zombies out of his path
-		tank_swing_interval          			: 1.5      : Interval between tank swings
-		tank_swing_miss_interval     			: 1.0      : Interval between tank swings after a miss
-		tank_swing_physics_prop_force			: 4.0      : Multiplier for tank hitting a phys prop.
-		tank_swing_range             			: 56       : Range of the actual swing
-		tank_throw_allow_range					: 250      : How far away our victim must be before we'll try to throw debris at them
-		tank_throw_min_interval					: 8        : Minimum interval between Tank rock throws
+		tank_attack_range					: 50		: Distance from Survivor that tank triggers own swing.
+		tank_burn_duration					: 75		: Number of seconds a burning Tank takes to die in easy, normal
+		tank_burn_duration_expert			: 85		: Number of seconds a burning Tank takes to die in expert
+		tank_burn_duration_hard				: 80		: Number of seconds a burning Tank takes to die in hard
+		tank_fist_radius					: 15		:
+		tank_swing_arc						: 180		:
+		tank_swing_duration					: 0.2		: Duration of the actual swing
+		tank_swing_fast_interval			: 0.6		: Interval between tank swings when he is clearing zombies out of his path
+		tank_swing_interval					: 1.5		: Interval between tank swings
+		tank_swing_miss_interval			: 1.0		: Interval between tank swings after a miss
+		tank_swing_physics_prop_force		: 4.0		: Multiplier for tank hitting a phys prop.
+		tank_swing_range					: 56		: Range of the actual swing
+		tank_throw_allow_range				: 250		: How far away our victim must be before we'll try to throw debris at them
+		tank_throw_min_interval				: 8			: Minimum interval between Tank rock throws
 
 	boomer:
-		z_boomer_limit							: 1        :
-		boomer_exposed_time_tolerance			: 1.0      : How long an out-of-range Boomer will tolerate being visible before fleeing
-		boomer_leaker_chance					: 0        : Chance (0 - 100) in which a boomer with modified behavior will spawn. Explodes and set aflame when player is near.
-		boomer_pz_claw_dmg						: 4        : Amount of damage done by a PZ boomer's regular melee attack
-		boomer_vomit_delay						: 1        : How long the Boomer waits before he vomits on his target on Normal difficulty
+		z_boomer_limit						: 1			:
+		boomer_exposed_time_tolerance		: 1.0		: How long an out-of-range Boomer will tolerate being visible before fleeing
+		boomer_leaker_chance				: 0			: Chance (0 - 100) in which a boomer with modified behavior will spawn. Explodes and set aflame when player is near.
+		boomer_pz_claw_dmg					: 4			: Amount of damage done by a PZ boomer's regular melee attack
+		boomer_vomit_delay					: 1			: How long the Boomer waits before he vomits on his target on Normal difficulty
 
 
 	hunter:
-		z_hunter_limit                  		: 1        :
-		hunter_committed_attack_range 			: 75       :
-		hunter_leap_away_give_up_range			: 1000     :
-		hunter_pounce_air_speed       			: 700      :
-		hunter_pounce_ready_range     			: 500      : If victim is this close, crouch and get ready
-		hunter_pz_claw_dmg            			: 6        : Amount of damage done by a PZ hunter's regular melee attack
-		z_hunter_health                 		: 250      : Zombie max health
-		z_hunter_max_pounce_bonus_damage		: 24       :
-		z_hunter_speed                  		: 300      :
+		z_hunter_limit							: 1			:
+		hunter_committed_attack_range			: 75		:
+		hunter_leap_away_give_up_range			: 1000		:
+		hunter_pounce_air_speed					: 700		:
+		hunter_pounce_ready_range				: 500		: If victim is this close, crouch and get ready
+		hunter_pz_claw_dmg						: 6			: Amount of damage done by a PZ hunter's regular melee attack
+		z_hunter_health							: 250		: Zombie max health
+		z_hunter_max_pounce_bonus_damage		: 24		:
+		z_hunter_speed							: 300		:
 
 	jockey:
-		z_jockey_limit               			: 1        :
-		jockey_pounce_air_speed     			: 700      :
-		jockey_pz_claw_dmg          			: 4        : Amount of damage done by a PZ jockey's regular melee attack
-		z_jockey_health              			: 325      : Zombie max health
-		z_jockey_leap_again_timer    			: 5.0      : How long after a dismount before the jockey can leap again.
-		z_jockey_leap_range          			: 200      : If victim is this close, leap at them
-		z_jockey_leap_time           			: 1.0      : Time allowed between jockey bot leaps.
-		z_jockey_ride_damage         			: 4        :
-		z_jockey_ride_damage_delay   			: 1.0      :
-		z_jockey_ride_damage_interval			: 1.0      :
-		z_jockey_speed               			: 250.0    :
+		z_jockey_limit							: 1			:
+		jockey_pounce_air_speed					: 700		:
+		jockey_pz_claw_dmg						: 4			: Amount of damage done by a PZ jockey's regular melee attack
+		z_jockey_health							: 325		: Zombie max health
+		z_jockey_leap_again_timer				: 5.0		: How long after a dismount before the jockey can leap again.
+		z_jockey_leap_range						: 200		: If victim is this close, leap at them
+		z_jockey_leap_time						: 1.0		: Time allowed between jockey bot leaps.
+		z_jockey_ride_damage					: 4			:
+		z_jockey_ride_damage_delay				: 1.0		:
+		z_jockey_ride_damage_interval			: 1.0		:
+		z_jockey_speed							: 250.0		:
 
 	charger:
-		z_charger_limit       					: 1        :
-		z_charge_impact_radius					: 120      :
-		z_charge_interval     					: 12       :
-		z_charge_max_damage   					: 10       :
-		z_charge_max_speed    					: 500      :
-		z_charge_start_speed  					: 250      :
-		z_charger_allow_shove 					: 0        : 0 = Cannot be shoved, 1 = Can be shoved
-		z_charger_health      					: 600      : Charger max health
-		z_charger_pound_dmg   					: 15       :
+		z_charger_limit							: 1			:
+		z_charge_impact_radius					: 120		:
+		z_charge_interval						: 12		:
+		z_charge_max_damage						: 10		:
+		z_charge_max_speed						: 500		:
+		z_charge_start_speed					: 250		:
+		z_charger_allow_shove					: 0			: 0 = Cannot be shoved, 1 = Can be shoved
+		z_charger_health						: 600		: Charger max health
+		z_charger_pound_dmg						: 15		:
 
 	smoker:
-		z_smoker_limit							: 1        :
-		tongue_allow_voluntary_release       	: 0        : Can a Smoker let go with his tongue by clicking or turning away?
-		tongue_break_from_damage_amount      	: 50       : How much damage to the smoker makes him let go of his victim.
-		tongue_bullet_radius                 	: 6        :
-		tongue_choke_damage_amount           	: 10       : How much damage the choke does.
-		tongue_choke_damage_interval         	: 1        : How often the choke does damage.
-		tongue_drag_damage_amount            	: 3        : How much damage the tongue drag does.
-		tongue_dropping_to_ground_time       	: 2        : A miss or a wall hit will wait this long before pulling back.
-		tongue_fly_speed                     	: 1000     : How fast a tongue flies through the air.
-		tongue_health                        	: 100      : Tongue health
-		tongue_hit_delay                     	: 20       : How long a smoker must wait to shoot his tongue after a hit, from the time he lets go.
-		tongue_miss_delay                    	: 15       : How long a smoker must wait to shoot his tongue after a miss.
-		tongue_player_dropping_to_ground_time	: 1        : How long after the tongue disconnects will a player need to wait.
-		tongue_range                         	: 750      : How far a smoker can shoot his tongue.
-		tongue_start_pull_delay              	: 0.1      : How long from tongue contact to tongue pulling.
-		tongue_victim_accuracy_penalty       	: 0.133    : How much someone's accuracy suffers while being dragged by a tongue.
-		tongue_victim_max_speed              	: 175      : The fastest the tongue can get you going.
+		z_smoker_limit							: 1			:
+		tongue_allow_voluntary_release			: 0			: Can a Smoker let go with his tongue by clicking or turning away?
+		tongue_break_from_damage_amount			: 50		: How much damage to the smoker makes him let go of his victim.
+		tongue_bullet_radius					: 6			:
+		tongue_choke_damage_amount				: 10		: How much damage the choke does.
+		tongue_choke_damage_interval			: 1			: How often the choke does damage.
+		tongue_drag_damage_amount				: 3			: How much damage the tongue drag does.
+		tongue_dropping_to_ground_time			: 2			: A miss or a wall hit will wait this long before pulling back.
+		tongue_fly_speed						: 1000		: How fast a tongue flies through the air.
+		tongue_health							: 100		: Tongue health
+		tongue_hit_delay						: 20		: How long a smoker must wait to shoot his tongue after a hit, from the time he lets go.
+		tongue_miss_delay						: 15		: How long a smoker must wait to shoot his tongue after a miss.
+		tongue_player_dropping_to_ground_time	: 1			: How long after the tongue disconnects will a player need to wait.
+		tongue_range							: 750		: How far a smoker can shoot his tongue.
+		tongue_start_pull_delay					: 0.1		: How long from tongue contact to tongue pulling.
+		tongue_victim_accuracy_penalty			: 0.133		: How much someone's accuracy suffers while being dragged by a tongue.
+		tongue_victim_max_speed					: 175		: The fastest the tongue can get you going.
 
 rescue:
-	rescue_distance								: 4500     : Living survivors must travel this far past a dead survivor's corpse to be able to rescue him
-	rescue_finale_ignore_distance				: 4000     : If living survivors are this far past a rescuable survivor, he stops calling for help
-	rescue_finale_spawn_range    				: 4000     : info_survivor_rescue ents will be considered if they are this close to the leading survivor
-	rescue_ignore_distance       				: 2000     : If living survivors are this far past a rescuable survivor, he stops calling for help
-	rescue_interval              				: 2.5      : Dead survivors are checked to start calling for help this often
-	rescue_min_dead_time         				: 60       : Duration in seconds a survivor must be dead before being rescuable
-	rescue_range                 				: 1000     : if a survivor gets this close to an active info_survivor_rescue, it will be triggered
-	rescue_spawn_flow            				: 400      : info_survivor_rescue ents will be considered if they are no more than this far ahead in flow distance from the leading survivor
-	rescue_spawn_range           				: 2000     : info_survivor_rescue ents will be considered if they are this close to the leading survivor
-	rescue_yell_delay            				: 1        : Delay before yelling when activating
-	rescue_yell_interval         				: 6        : Interval at which an info_survivor_rescue yells for help
+	rescue_distance								: 4500		: Living survivors must travel this far past a dead survivor's corpse to be able to rescue him
+	rescue_finale_ignore_distance				: 4000		: If living survivors are this far past a rescuable survivor, he stops calling for help
+	rescue_finale_spawn_range					: 4000		: info_survivor_rescue ents will be considered if they are this close to the leading survivor
+	rescue_ignore_distance						: 2000		: If living survivors are this far past a rescuable survivor, he stops calling for help
+	rescue_interval								: 2.5		: Dead survivors are checked to start calling for help this often
+	rescue_min_dead_time						: 60		: Duration in seconds a survivor must be dead before being rescuable
+	rescue_range								: 1000		: if a survivor gets this close to an active info_survivor_rescue, it will be triggered
+	rescue_spawn_flow							: 400		: info_survivor_rescue ents will be considered if they are no more than this far ahead in flow distance from the leading survivor
+	rescue_spawn_range							: 2000		: info_survivor_rescue ents will be considered if they are this close to the leading survivor
+	rescue_yell_delay							: 1			: Delay before yelling when activating
+	rescue_yell_interval						: 6			: Interval at which an info_survivor_rescue yells for help
 
 bot:
-	sb_add										: cmd      : Add a Survivor Bot.
-	sb_all_bot_game 							: 0        : Allow a server of nothing but bots
-	sb_allow_leading							: 0        : If nonzero, SurvivorBots can take the lead and won't always wait behind the lead human player
-	sb_allow_shoot_through_survivors			: 1        : Allow survivorbots to shoot through fellow survivors
-	sb_close_checkpoint_door_interval			: 2        :
-	sb_far_hearing_range						: 1500     :
-*	sb_friend_immobilized_reaction_time_expert	: 0.5      : How quickly a SurvivorBot realizes a friend has been Pounced or Tongued
-*	sb_friend_immobilized_reaction_time_hard	: 1.0      : How quickly a SurvivorBot realizes a friend has been Pounced or Tongued
-*	sb_friend_immobilized_reaction_time_normal	: 2.0      : How quickly a SurvivorBot realizes a friend has been Pounced or Tongued
-*	sb_friend_immobilized_reaction_time_vs		: 0.5      : How quickly a SurvivorBot realizes a friend has been Pounced or Tongued
-**	sb_friendlyfire								: 0        :
-	sb_max_team_melee_weapons					: 0        : The total number of melee weapons allowed on the team. 0 = bots never use melee
-**	sb_temp_health_consider_factor				: 0.5      : Temporary health is multiplied by this when SurvivorBots consider who needs healing
-	sb_use_upgrades								: 1        :
-*	sb_vomit_blind_time							: 5        : How long Boomer vomit/explosion gore blinds us
+	sb_add										: cmd		: Add a Survivor Bot.
+	sb_all_bot_game								: 0			: Allow a server of nothing but bots
+	sb_allow_leading							: 0			: If nonzero, SurvivorBots can take the lead and won't always wait behind the lead human player
+	sb_allow_shoot_through_survivors			: 1			: Allow survivorbots to shoot through fellow survivors
+	sb_close_checkpoint_door_interval			: 2			:
+	sb_far_hearing_range						: 1500		:
+*	sb_friend_immobilized_reaction_time_expert	: 0.5		: How quickly a SurvivorBot realizes a friend has been Pounced or Tongued
+*	sb_friend_immobilized_reaction_time_hard	: 1.0		: How quickly a SurvivorBot realizes a friend has been Pounced or Tongued
+*	sb_friend_immobilized_reaction_time_normal	: 2.0		: How quickly a SurvivorBot realizes a friend has been Pounced or Tongued
+*	sb_friend_immobilized_reaction_time_vs		: 0.5		: How quickly a SurvivorBot realizes a friend has been Pounced or Tongued
+**	sb_friendlyfire								: 0			:
+	sb_max_team_melee_weapons					: 0			: The total number of melee weapons allowed on the team. 0 = bots never use melee
+**	sb_temp_health_consider_factor				: 0.5		: Temporary health is multiplied by this when SurvivorBots consider who needs healing
+	sb_use_upgrades								: 1			:
+*	sb_vomit_blind_time							: 5			: How long Boomer vomit/explosion gore blinds us
 
 
 
 versus:
-	versus_force_start_time						: 90       : Starts versus game after this amount of time, even if survivors are still inside the safe room
-	versus_shove_hunter_fov         			: 90       : Angle that survivor shove will hit hunters
-	versus_shove_hunter_fov_pouncing			: 45       : Angle that survivor shove will hit hunters while pouncing
-	versus_shove_jockey_fov_leaping 			: 45       : Angle that survivor shove will hit jockeys while leaping
-	versus_special_respawn_interval 			: 20       :
-	versus_tank_chance       					: 0.75     : Chance of a tank spawning within a regular versus map
-	versus_tank_chance_finale					: 0.1      : Chance of a tank spawning within the finale map of a campaign
-	versus_tank_chance_intro 					: 0.3      : Chance of a tank spawning within the first map of a campaign
-	versus_winning_team_goes_last				: 1        : In versus mode, the team that is losing plays as survivors first
-	versus_witch_chance       					: 0.75     : Chance of a witch spawning within a regular versus map
-	versus_witch_chance_finale					: 0.1      : Chance of a witch spawning within the finale map of a campaign
-	versus_witch_chance_intro 					: 0.3      : Chance of a witch spawning within the first map of a campaign
+	versus_force_start_time						: 90		: Starts versus game after this amount of time, even if survivors are still inside the safe room
+	versus_shove_hunter_fov						: 90		: Angle that survivor shove will hit hunters
+	versus_shove_hunter_fov_pouncing			: 45		: Angle that survivor shove will hit hunters while pouncing
+	versus_shove_jockey_fov_leaping				: 45		: Angle that survivor shove will hit jockeys while leaping
+	versus_special_respawn_interval				: 20		:
+	versus_tank_chance							: 0.75		: Chance of a tank spawning within a regular versus map
+	versus_tank_chance_finale					: 0.1		: Chance of a tank spawning within the finale map of a campaign
+	versus_tank_chance_intro					: 0.3		: Chance of a tank spawning within the first map of a campaign
+	versus_winning_team_goes_last				: 1			: In versus mode, the team that is losing plays as survivors first
+	versus_witch_chance							: 0.75		: Chance of a witch spawning within a regular versus map
+	versus_witch_chance_finale					: 0.1		: Chance of a witch spawning within the finale map of a campaign
+	versus_witch_chance_intro					: 0.3		: Chance of a witch spawning within the first map of a campaign
 
 mob:
-	z_common_limit                 				: 30       : How many common infecteds we can have at once.
-	z_health                       				: 50       : Zombie max health
-	z_mob_spawn_finale_size        				: 20       :
-	z_mob_spawn_max_interval_easy  				: 240      :
-	z_mob_spawn_max_interval_expert				: 180      :
-	z_mob_spawn_max_interval_hard  				: 180      :
-	z_mob_spawn_max_interval_normal				: 180      :
-	z_mob_spawn_max_size           				: 30       :
-	z_mob_spawn_min_interval_easy  				: 120      :
-	z_mob_spawn_min_interval_expert				: 90       :
-	z_mob_spawn_min_interval_hard  				: 90       :
-	z_mob_spawn_min_interval_normal				: 90       :
-	z_mob_spawn_min_size           				: 10       :
-	z_attack_change_target_range   				: 100      :
-	z_attack_incapacitated_damage  				: 10       :
-	z_attack_interval              				: 1        :
-	z_attack_max_range             				: 20       :
-	z_attack_min_range             				: 10       :
-	z_attack_movement_penalty      				: 0.5      :
-	z_hear_gunfire_range           				: 200      :
-	z_hear_runner_far_range        				: 750      :
-	z_hear_runner_near_range       				: 500      :
-	z_hit_from_behind_factor       				: 0.5      : Damage multiplier if zombie hits Survivor from behind
-	z_hit_incap_factor_easy        				: 0.1      : Damage multiplier if zombie hits incapacitated Survivor
-	z_hit_incap_factor_expert      				: 1.0      : Damage multiplier if zombie hits incapacitated Survivor
-	z_hit_incap_factor_hard        				: 1.0      : Damage multiplier if zombie hits incapacitated Survivor
-	z_hit_incap_factor_normal      				: 1.0      : Damage multiplier if zombie hits incapacitated Survivor
+	z_common_limit								: 30		: How many common infecteds we can have at once.
+	z_health									: 50		: Zombie max health
+	z_mob_spawn_finale_size						: 20		:
+	z_mob_spawn_max_interval_easy				: 240		:
+	z_mob_spawn_max_interval_expert				: 180		:
+	z_mob_spawn_max_interval_hard				: 180		:
+	z_mob_spawn_max_interval_normal				: 180		:
+	z_mob_spawn_max_size						: 30		:
+	z_mob_spawn_min_interval_easy				: 120		:
+	z_mob_spawn_min_interval_expert				: 90		:
+	z_mob_spawn_min_interval_hard				: 90		:
+	z_mob_spawn_min_interval_normal				: 90		:
+	z_mob_spawn_min_size						: 10		:
+	z_attack_change_target_range				: 100		:
+	z_attack_incapacitated_damage				: 10		:
+	z_attack_interval							: 1			:
+	z_attack_max_range							: 20		:
+	z_attack_min_range							: 10		:
+	z_hear_gunfire_range						: 200		:
+	z_hear_runner_far_range						: 750		:
+	z_hear_runner_near_range					: 500		:
+	z_hit_from_behind_factor					: 0.5		: Damage multiplier if zombie hits Survivor from behind
+	z_hit_incap_factor_easy						: 0.1		: Damage multiplier if zombie hits incapacitated Survivor
+	z_hit_incap_factor_expert					: 1.0		: Damage multiplier if zombie hits incapacitated Survivor
+	z_hit_incap_factor_hard						: 1.0		: Damage multiplier if zombie hits incapacitated Survivor
+	z_hit_incap_factor_normal					: 1.0		: Damage multiplier if zombie hits incapacitated Survivor
 
 
 survivor:
-	z_gun_survivor_friend_push  				: 1        : Allow survivors to push survivors with a right click.
-**	z_gun_swing_coop_max_penalty				: 8        : The number of swings before the maximum punch/melee/shove fatigue delay is set in (coop).
-**	z_gun_swing_coop_min_penalty				: 5        : The number of swings before the minimum punch/melee/shove fatigue delay is set in (coop).
-**	z_gun_swing_duration        				: 0.2      :
-**	z_gun_swing_interval        				: 0.7      :
-**	z_gun_swing_vs_cooldown     				: 1.0      :
-**	z_gun_swing_vs_max_penalty  				: 6        : The number of swings before the maximum punch/melee/shove fatigue delay is set in (vs).
-**	z_gun_swing_vs_min_penalty  				: 3        : The number of swings before the minimum punch/melee/shove fatigue delay is set in (vs).
-**	z_gun_swing_vs_restore_time 				: 4.0      :
+	z_attack_movement_penalty					: 0.5		:
+	z_gun_survivor_friend_push					: 1			: Allow survivors to push survivors with a right click.
+**	z_gun_swing_coop_max_penalty				: 8			: The number of swings before the maximum punch/melee/shove fatigue delay is set in (coop).
+**	z_gun_swing_coop_min_penalty				: 5			: The number of swings before the minimum punch/melee/shove fatigue delay is set in (coop).
+**	z_gun_swing_duration						: 0.2		:
+**	z_gun_swing_interval						: 0.7		:
+**	z_gun_swing_vs_cooldown						: 1.0		:
+**	z_gun_swing_vs_max_penalty					: 6			: The number of swings before the maximum punch/melee/shove fatigue delay is set in (vs).
+**	z_gun_swing_vs_min_penalty					: 3			: The number of swings before the minimum punch/melee/shove fatigue delay is set in (vs).
+**	z_gun_swing_vs_restore_time					: 4.0		:
