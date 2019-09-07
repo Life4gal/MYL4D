@@ -16,9 +16,6 @@ function Precache()
 {
 	//Utils.PrecacheCSSWeapons();
 	Utils.PrecacheSurvivors();
-	//Utils.PrecacheModel("models/editor/axis_helper_thick.mdl");
-	//Utils.PrecacheModel("models/infected/witch.mdl");
-	//Utils.PrecacheModel("models/infected/witch_bride.mdl");
 }
 
 DirectorOptions <-
@@ -49,7 +46,6 @@ default:
     specialmax = 8,
     specialinitial = 25,
     specialinitialchange = 0
-
 */
 
 ::g_BoomerLimit <- 2;
@@ -79,12 +75,12 @@ vargv is a regular squirrel array and can be used accordingly.
 */
 ::changeDirectorOptions <- function(specialname, ...){
     if(vargv.len() != 2){
-        Utils.SayToAll("000Wrong format!");
+        Utils.SayToAll("Wrong format!");
         return;
     }
     vargv[1] = vargv[1].tointeger();
     if(vargv[1] < 0){
-        Utils.SayToAll("111Wrong number!");
+        Utils.SayToAll("Wrong number!");
         return;
     }
     if(vargv[0] == "limit"){
@@ -124,9 +120,7 @@ vargv is a regular squirrel array and can be used accordingly.
                 //Utils.SayToAll("Success change " + specialname + " limit!");
                 break;
             default:
-                Utils.SayToAll("222Wrong format!");
-                Utils.SayToAll("specialname = " + specialname + " vargv[0] = " + vargv[0] + " vargv[1] = " +vargv[1]);
-
+                Utils.SayToAll("Wrong format!");
         }
     }
     else if(vargv[0] == "respawn"){
@@ -137,13 +131,13 @@ vargv is a regular squirrel array and can be used accordingly.
             g_SpecialInitial = vargv[1];
         }
         else{
-            Utils.SayToAll("333Wrong format!");
+            Utils.SayToAll("Wrong format!");
             return;
         }
         //Utils.SayToAll("Success change special respawn time!");
     }
     else{
-        Utils.SayToAll("444Wrong format!");
+        Utils.SayToAll("Wrong format!");
         return;
     }
 }
@@ -211,14 +205,4 @@ function Update(){
         DirectorOptions.SpecialInitialSpawnDelayMax = _time + 3;
         DirectorOptions.SpecialInitialSpawnDelayMin = _time;
     }
-    /*  Debug
-    Utils.SayToAll(" Boomer = " + g_BoomerLimit + " D: " + DirectorOptions.BoomerLimit);
-    Utils.SayToAll(" Hunter = " + g_HunterLimit + " D: " + DirectorOptions.HunterLimit);
-    Utils.SayToAll(" Spitter = " + g_SpitterLimit + " D: " + DirectorOptions.SpitterLimit);
-    Utils.SayToAll(" Charger = " + g_ChargerLimit + " D: " + DirectorOptions.ChargerLimit);
-    Utils.SayToAll(" Jockey = " + g_JockeyLimit + " D: " + DirectorOptions.JockeyLimit);
-    Utils.SayToAll(" Smoker = " + g_SmokerLimit + " D: " + DirectorOptions.SmokerLimit);
-    Utils.SayToAll(" SpecialMax = " + g_SpecialMax + " D: " + DirectorOptions.cm_MaxSpecials);
-    Utils.SayToAll(" SpecialInitial = " + _time + " D: " + DirectorOptions.cm_SpecialRespawnInterval);
-    */
 }
