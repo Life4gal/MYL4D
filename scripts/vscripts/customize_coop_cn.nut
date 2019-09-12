@@ -29,7 +29,7 @@ function Precache()
 ::g_SpecialInfo <- "";
 ::g_CommonInfo <- "";
 ::g_SteamUrl <- "https://steamcommunity.com/sharedfiles/\nfiledetails/?id=1837443373";
-::g_GitHubUrl <- "https://github.com/Life4gal/MYL4D/blob/master/\nscripts/vscripts/customize_coop.nut";
+::g_GitHubUrl <- "https://github.com/Tampername/MYL4D/blob/master/\nscripts/vscripts/customize_coop.nut";
 //::GiveWithCoolDown <- false;
 
 DirectorOptions <-
@@ -143,7 +143,7 @@ function ChatTriggers::help(player, args, text){
 
 //================================= Impl ================================
 /*
-When the function is called all the extra parameters will be accessible
+When the function is called all the extra parameters will be accessible 
 through the array called vargv, that is passed as implicit parameter.
 vargv is a regular squirrel array and can be used accordingly.
 */
@@ -151,8 +151,8 @@ vargv is a regular squirrel array and can be used accordingly.
 
 ::changeDirectorOptions <- function(playername, ...){
 	if(vargv.len() == 3){
-		if(vargv[1] == "limit"){
-			if(vargv[0] == "special"){
+		if(vargv[1] == "limit" || vargv[1] == "数量"){
+			if(vargv[0] == "special" || vargv[0] == "特感"){
 				if(vargv[2] > 24){
 					vargv[2] == 24;
 				}
@@ -167,11 +167,11 @@ vargv is a regular squirrel array and can be used accordingly.
 					g_JockeyLimit = 0;
 					g_SmokerLimit = 0;
 					g_SpecialMax = 0;
-					buildHUD(1, playername, "set special limit to ", vargv[2]);
+					buildHUD(1, playername, "设置特感数量为 ", vargv[2]);
 					return;
 				}
 				local _max = 0;
-				if(!g_SpecialMax && !g_BoomerLimit && !g_HunterLimit && !g_SpitterLimit && !g_ChargerLimit && !g_SmokerLimit){
+				if(!g_SpecialMax && !g_BoomerLimit && !g_HunterLimit && !g_SpitterLimit && !g_ChargerLimit && !g_SmokerLimit){	
 					_max = vargv[2];
 					while(_max > 0){
 						switch(RandomInt(0, 5)){
@@ -199,7 +199,7 @@ vargv is a regular squirrel array and can be used accordingly.
 						_max--;
 					}
 					g_SpecialMax = vargv[2];
-					buildHUD(1, playername, "set special limit to ", vargv[2]);
+					buildHUD(1, playername, "设置特感数量为 ", vargv[2]);
 					return;
 				}
 				if((_max = g_BoomerLimit + g_ChargerLimit + g_HunterLimit + g_JockeyLimit + g_SmokerLimit + g_SpitterLimit) > vargv[2]){
@@ -248,12 +248,12 @@ vargv is a regular squirrel array and can be used accordingly.
 						}
 					}
 					g_SpecialMax = vargv[2];
-					buildHUD(1, playername, "set special limit to ", vargv[2]);
+					buildHUD(1, playername, "设置特感数量为 ", vargv[2]);
 					return;
 				}
 				g_SpecialMax = vargv[2];
 			}
-			else if(vargv[0] == "common"){
+			else if(vargv[0] == "common" || vargv[0] == "普感"){
 				if(vargv[2] > 250){
 					vargv[2] = 250;
 				}
@@ -261,17 +261,17 @@ vargv is a regular squirrel array and can be used accordingly.
 					vargv[2] = 0;
 				}
 				g_CommonLimit = vargv[2];
-				buildHUD(2, playername, "set common limit to ", vargv[2]);
+				buildHUD(2, playername, "设置普感数量为 ", vargv[2]);
 			}
 			else{
 				buildHUD(0);
 			}
 		}
-		else if(vargv[1] == "respawn"){
+		else if(vargv[1] == "respawn" || vargv[1] == "复活"){
 			if(vargv[2] < 8){
 				vargv[2] = 8;
 			}
-			buildHUD(1, playername, "set special respawn time to ", vargv[2] + "s");
+			buildHUD(1, playername, "设置特感复活时间为 ", vargv[2] + "秒");
 			g_SpecialInitial = vargv[2];
 		}
 		else{
@@ -279,16 +279,16 @@ vargv is a regular squirrel array and can be used accordingly.
 		}
 	}
 	else if(vargv.len() == 4){
-		if(vargv[1] == "respawn"){
-			if(vargv[2] == "change"){
-				buildHUD(1, playername, "set special respawn time change ", vargv[2] + "s per hunman survivor");
+		if(vargv[1] == "respawn" || vargv[1] == "复活"){
+			if(vargv[2] == "change" || vargv[2] == "改变"){
+				buildHUD(1, playername, "设置特感复活时间改变 ", vargv[2] + "秒每多一个人类玩家");
 				g_SpecialInitialChange = vargv[3];
 			}
 			else{
 				buildHUD(0);
 			}
 		}
-		else if(vargv[1] == "limit"){
+		else if(vargv[1] == "limit" || vargv[1] == "数量"){
 			if(vargv[3] < 0){
 				vargv[3] = 0;
 			}
@@ -300,26 +300,32 @@ vargv is a regular squirrel array and can be used accordingly.
 					g_SpecialMax = 2;
 				}
 				switch(vargv[2]){
+					case "胖子":
 					case "boomer":
 						g_BoomerLimit = vargv[3];
 						g_SpecialMax += (vargv[3] - 2);
 						break;
+					case "猎人":
 					case "hunter":
 						g_HunterLimit = vargv[3];
 						g_SpecialMax += (vargv[3] - 2);
 						break;
+					case "口水":
 					case "spitter":
 						g_SpitterLimit = vargv[3];
 						g_SpecialMax += (vargv[3] - 2);
 						break;
+					case "牛":
 					case "charger":
 						g_ChargerLimit = vargv[3];
 						g_SpecialMax += (vargv[3] - 2);
 						break;
+					case "猴子":
 					case "jockey":
 						g_JockeyLimit = vargv[3];
 						g_SpecialMax += (vargv[3] - 2);
 						break;
+					case "烟鬼":
 					case "smoker":
 						g_SmokerLimit = vargv[3];
 						g_SpecialMax += (vargv[3] - 2);
@@ -327,7 +333,7 @@ vargv is a regular squirrel array and can be used accordingly.
 					default:
 						;
 				}
-				buildHUD(1, playername, "set " + vargv[2] + " limit to", vargv[3]);
+				buildHUD(1, playername, "设置 " + vargv[2] + " 数量为", vargv[3]);
 			}
 		}
 		else{
@@ -349,12 +355,12 @@ vargv is a regular squirrel array and can be used accordingly.
 				if(player.IsSurvivor()){
 					if(giveall){
 						player.GiveItem(itemname);
-						buildHUD(2, playername, "gives all survivors a", itemname);
+						buildHUD(2, playername, "给了所有幸存者 ", itemname);
 					}
 					else{
 						if(player.GetPlayerName() == playername){
 							player.GiveItem(itemname);
-							buildHUD(2, playername, "gives himself a", itemname);
+							buildHUD(2, playername, "给了他自己 ", itemname);
 						}
 					}
 				}
@@ -365,7 +371,7 @@ vargv is a regular squirrel array and can be used accordingly.
 //		Timers.AddTimer(5.0, false, (function(){ GiveWithCoolDown = false;}));
 /*
 An Error in here:
-
+	
 AN ERROR HAS OCCURED [wrong number of parameters]
 CALLSTACK
 *FUNCTION [unknown()] f:/steam/steamapps/common/left 4 dead 2/left4dead2/scripts/vscripts/VSLib/Timer.nut line [190]
@@ -402,51 +408,83 @@ But I don't know how to fix it......
 
 ::itemNameAssociation <- function(itemname){
 	switch(itemname){
+		case "肾上腺":
+		case "针":
 		case "adren":
 		case "adrenal":
 			return "adrenaline";
+		case "小连喷":
 		case "auto":
 			return "autoshotgun";
+		case "可乐":
 		case "cola":
 			return "cola_bottles";
+		case "电击器":
 		case "defib":
 			return "defibrillator";
+		case "烟花":
 		case "firework":
 			return "fireworkcrate";
+		case "医疗包":
+		case "包":
 		case "first":
 		case "aid":
 		case "kit":
 			return "first_aid_kit";
+		case "油桶":
+		case "油箱":
 		case "gas":
 			return "gascan";
+		case "榴弹":
 		case "grenade":
 			return "grenade_launcher";
+		case "血":
+		case "加血":
 		case "hp":
 			return "health";
+		case "猎狙":
 		case "hunting":
 			return "hunting_rifle";
+		case "棒球棒":
 		case "baseball":
 			return "baseball_bat";
+		case "板球棒":
 		case "cricket":
 			return "cricket_bat";
+		case "吉他":
 		case "guitar":
 			return "electric_guitar";
+		case "斧子":
+		case "斧头":
 		case "axe":
 			return "fireaxe";
+		case "锅":
+		case "平底锅":
 		case "pan":
 			return "frying_pan";
+		case "氧气瓶":
 		case "oxygen":
 			return "oxygentank";
+		case "药丸":
+		case "药":
 		case "pill":
 		case "pills":
 			return "pain_pills";
+		case "土质":
+		case "手雷":
+		case "炸弹":
 		case "pipe":
 		case "bomb":
 			return "pipe_bomb";
+		case "马格南":
+		case "沙鹰":
 		case "magnum":
 			return "pistol_magnum";
+		case "丙烷":
+		case "丙烷罐":
 		case "propane":
 			return "propanetank";
+		case "木喷":
 		case "pump":
 			return "pumpshotun"
 		case "m16":
@@ -458,8 +496,10 @@ But I don't know how to fix it......
 			return "rifle_desert";
 		case "sg552":
 			return "rifle_sg552";
+		case "铁喷":
 		case "chrome":
 			return "shotgun_chrome";
+		case "大连喷":
 		case "spas":
 			return "spas";
 		case "mac":
@@ -470,14 +510,20 @@ But I don't know how to fix it......
 			return "smh_silenced";
 		case "awp":
 			return "sniper_awp";
+		case "军用连狙":
 		case "military":
 			return "sniper_military";
 		case "scout":
 			return "sniper_scout";
+		case "高爆":
+		case "高爆弹":
 		case "explosive":
 			return "upgradepack_explosive";
+		case "燃烧":
+		case "燃烧弹":
 		case "incendiary":
 			return "upgradepack_incendiary";
+		case "胆汁":
 		case "vomit":
 			return "vomitjar";
 		default:
@@ -498,11 +544,11 @@ HUD TYPE:
 ::buildHUD <- function(hudtype, ...){
 	if(hudtype == 0){
 		local _hud = HUD.Item("\n{msg}\n")
-		_hud.SetValue("msg", "Wrong Format!input '!help' for help");
+		_hud.SetValue("msg", "格式错误!输入'!help' 查看帮助");
 		_hud.AttachTo(HUD_MID_BOX);
         _hud.ChangeHUDNative(0, 0, 350, 250, 1366, 720);
         _hud.SetTextPosition(TextAlign.Left);
-        _hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK);
+        _hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK); 
         Timers.AddTimer(6.0, false, CloseHud, _hud);
 	}
 	else if(hudtype == 1){
@@ -513,7 +559,7 @@ HUD TYPE:
 		_hud.AttachTo(HUD_MID_BOX);
         _hud.ChangeHUDNative(0, 0, 350, 250, 1366, 720);
         _hud.SetTextPosition(TextAlign.Left);
-        _hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK);
+        _hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK); 
         Timers.AddTimer(6.0, false, CloseHud, _hud);
 	}
 	else if(hudtype == 2){
@@ -524,18 +570,20 @@ HUD TYPE:
 		_hud.AttachTo(HUD_MID_BOX);
         _hud.ChangeHUDNative(0, 0, 350, 250, 1366, 720);
         _hud.SetTextPosition(TextAlign.Left);
-        _hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK);
+        _hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK); 
         Timers.AddTimer(6.0, false, CloseHud, _hud);
 	}
+	/*
 	else if(hudtype == 3){
 		local _hud = HUD.Item("\n{msg}\n");
 		_hud.SetValue("msg", "The '!give' directive with a cooldown!");
 		_hud.AttachTo(HUD_MID_BOX);
         _hud.ChangeHUDNative(0, 0, 250, 100, 1366, 720);
         _hud.SetTextPosition(TextAlign.Left);
-        _hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK);
+        _hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK); 
         Timers.AddTimer(6.0, false, CloseHud, _hud);
 	}
+	*/
 	else if(hudtype == 4){
 		local _hud = HUD.Item("\n{special_info}\n{common_info}\n");
 		_hud.SetValue("special_info", g_SpecialInfo);
@@ -543,19 +591,19 @@ HUD TYPE:
 		_hud.AttachTo(HUD_MID_BOX);
 		_hud.ChangeHUDNative(0, 0, 450, 250, 1366, 720);
 		_hud.SetTextPosition(TextAlign.Left);
-		_hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK);
+		_hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK); 
 		Timers.AddTimer(6.0, false, CloseHud, _hud);
 	}
 	else if(hudtype == 5){
 		local _hud = HUD.Item("\n{t1}\n{t2}\n{t3}\n{t4}\\n");
-		_hud.SetValue("t1", "'!special':'!special limit hunter 0'");
-		_hud.SetValue("t2", "'!common':'!special limit 50'");
-		_hud.SetValue("t3", "'!give':'!give pipe_bomb'");
-		_hud.SetValue("t4", "For more infomation see workshop.");
+		_hud.SetValue("t1", "'!special':'!special 数量 猎人 0'");
+		_hud.SetValue("t2", "'!common':'!special 数量 50'");
+		_hud.SetValue("t3", "'!give':'!give 土质'");
+		_hud.SetValue("t4", "查看创意工坊以获得更多信息.");
 		_hud.AttachTo(HUD_MID_BOX);
-		_hud.ChangeHUDNative(0, 0, 400, 200, 1366, 720);
+		_hud.ChangeHUDNative(0, 0, 500, 300, 1366, 720);
 		_hud.SetTextPosition(TextAlign.Left);
-		_hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK);
+		_hud.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK); 
 		Timers.AddTimer(6.0, false, CloseHud, _hud);
 
 		local _Steam = HUD.Item("\n{steamUrl}\n");
@@ -563,7 +611,7 @@ HUD TYPE:
 		_Steam.AttachTo(HUD_SCORE_2);
 		_Steam.ChangeHUDNative(0, 120, 550, 200, 1366, 720);
 		_Steam.SetTextPosition(TextAlign.Left);
-		_Steam.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK);
+		_Steam.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK); 
 		Timers.AddTimer(6.0, false, CloseHud, _Steam);
 
 		local _GitHub = HUD.Item("\n{githubUrl}\n");
@@ -571,7 +619,7 @@ HUD TYPE:
 		_GitHub.AttachTo(HUD_SCORE_3);
 		_GitHub.ChangeHUDNative(0, 225, 600, 200, 1366, 720);
 		_GitHub.SetTextPosition(TextAlign.Left);
-		_GitHub.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK);
+		_GitHub.AddFlag(g_ModeScript.HUD_FLAG_NOBG|HUD_FLAG_BLINK); 
 		Timers.AddTimer(6.0, false, CloseHud, _GitHub);
 		Utils.SayToAll("Workshop:" + g_SteamUrl);
 		Utils.SayToAll("GitHub:" + g_GitHubUrl);
@@ -590,7 +638,7 @@ HUD TYPE:
 
 
 function Update(){
-
+	
 	local _HumanCount = 0;
 	_HumanCount = getHumanCount();
 
@@ -642,6 +690,7 @@ function Update(){
 	DirectorOptions.cm_SpecialRespawnInterval = _time;
 	DirectorOptions.SpecialInitialSpawnDelayMax = _time + 3;
 	DirectorOptions.SpecialInitialSpawnDelayMin = _time;
-	g_CommonInfo = "Common : " + "[(" + DirectorOptions.cm_CommonLimit + ")]";
-	g_SpecialInfo = "Special : " + "[(" + DirectorOptions.cm_MaxSpecials + ") SI (" + DirectorOptions.cm_SpecialRespawnInterval +")s respawn]";
+	g_CommonInfo = "普感 : " + "[(" + DirectorOptions.cm_CommonLimit + ")]只";
+	g_SpecialInfo = "特感 : " + "[(" + DirectorOptions.cm_MaxSpecials + ") 只 (" + DirectorOptions.cm_SpecialRespawnInterval +")秒重生]";
 }
+
