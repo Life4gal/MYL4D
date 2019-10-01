@@ -3,11 +3,14 @@
 #include <sdktools>
 #include <sdkhooks>
 
-#define PLUGIN_VERSION "2.0"
+#define PLUGIN_VERSION "2.1"
 
-bool IsPlayerOnFighting[MAXPLAYERS+1] = false;
-int COOLDOWN[MAXPLAYERS+1] = 0;
-int MeleeNumber[MAXPLAYERS+1] = 0;  //We can't get player's melee script name, so we can only give player melee weapon in that order
+new Handle:IntervalTimer[MAXPLAYERS+1] = {INVALID_HANDLE, ...};
+new bool:TimerRunning[MAXPLAYERS+1] = false;
+new Handle:DamageInterval = INVALID_HANDLE;
+new Handle:SwitchInterval = INVALID_HANDLE;
+new IntervalRemain[MAXPLAYERS+1] = 0;
+new PlayerMeleeNum[MAXPLAYERS+1] = 0;  //We can't get player's melee script name, so we can only give player melee weapon in that order
 /*
 0 = baseball_bat
 1 = cricket_bat
@@ -22,7 +25,6 @@ int MeleeNumber[MAXPLAYERS+1] = 0;  //We can't get player's melee script name, s
 10 = tonfa
 */
 new String:MeleeClass[11][32] = {"baseball_bat", "cricket_bat", "crowbar", "electric_guitar", "fireaxe", "frying_pan", "golfclub", "katana", "knife", "machete", "tonfa"};
-new Handle:CoolDownTime = INVALID_HANDLE;
 
 public Plugin:myinfo = 
 {
@@ -42,7 +44,9 @@ public OnPluginStart()
     {
         SetFailState("Plugin supports Left 4 Dead 2 only.");
     }
-    CoolDownTime = CreateConVar("l4d2_cooldowntime", "5", "How long to cooldown to change weapon", FCVAR_NOTIFY);
+    DamageInterval = CreateConVar("l4d2_damage_interval", "10", "Gun switching time interval if been attacked", FCVAR_NOTIFY);
+    SwitchInterval = CreateConVar("l4d2_switch_interval", "5", "Gun switching time interval normal", FCVAR_NOTIFY);
+    HookEvent("player_team", Event_PlayerChangeTeam);
     AutoExecConfig(true, "easyChangeWeapon");
 }
 
@@ -54,36 +58,14 @@ public OnClientPutInServer(client)
 	}
 }
 
-public OnClientDisconnect(client)
+public Action:Event_PlayerChangeTeam(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	if (client > 0 && IsClientInGame(client))
-	{
-		SDKUnhook(client, SDKHook_OnTakeDamage, OnTakeDamage);
-	}
-}
-
-public Action:OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &damagetype) 
-{
-    int time = GetConVarInt(CoolDownTime);
-    if(damage > 0.0)
+    new bool:disconnect = GetEventBool(event, "disconnect");
+    new client = GetClientOfUserId(GetEventInt(event, "userid"));
+    if(disconnect)
     {
-        if(GetClientTeam(attacker) == 2)
-        {
-            if(COOLDOWN[attacker] < time){
-                COOLDOWN[attacker] = time;
-            }
-            IsPlayerOnFighting[attacker] = true;
-        }
-        if(GetClientTeam(victim) == 2)
-        {
-            if(COOLDOWN[victim] < time){
-                COOLDOWN[victim] = time;
-            }
-            IsPlayerOnFighting[victim] = true;
-        }
-        return Plugin_Changed;
+        SDKUnhook(client, SDKHook_OnTakeDamage, OnTakeDamage);
     }
-    return Plugin_Continue;
 }
 
 public Action:OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:angles[3], &weapon)
@@ -93,220 +75,255 @@ public Action:OnPlayerRunCmd(client, &buttons, &impulse, Float:vel[3], Float:ang
     GetClientAuthId(client, AuthId_Steam2, id, sizeof(id));
     if(!StrEqual(id, "BOT", false))
     {
-        if (buttons & IN_SPEED && !IsPlayerOnFighting[client] && COOLDOWN[client] <= 0)//&& buttons & IN_ATTACK2
+        int switch_interval = GetConVarInt(SwitchInterval);
+        if(IntervalRemain[client] <= 0)//&& buttons & IN_ATTACK2
         {
-            decl String:weaponid[64];
-            GetClientWeapon(client, weaponid, sizeof(weaponid));
-            //=====THROW============
-            if(StrEqual(weaponid, "weapon_molotov", false))
+            if(buttons & IN_SPEED)
             {
-                new ent = GetPlayerWeaponSlot(client, 2);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_pipe_bomb");
-            }
-            else if(StrEqual(weaponid, "weapon_pipe_bomb", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 2);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_vomitjar");
-            }
-            else if(StrEqual(weaponid, "weapon_vomitjar", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 2);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_molotov");
-            }
-            //====MEDKIT==============
-            else if(StrEqual(weaponid, "weapon_first_aid_kit", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 3);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_defibrillator");
-            }
-            else if(StrEqual(weaponid, "weapon_defibrillator", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 3);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_upgradepack_incendiary");
-            }
-            else if(StrEqual(weaponid, "weapon_upgradepack_incendiary", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 3);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_upgradepack_explosive");
-            }
-            else if(StrEqual(weaponid, "weapon_upgradepack_explosive", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 3);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_first_aid_kit");
-            }
-            //====PILLS================
-            else if(StrEqual(weaponid, "weapon_pain_pills", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 4);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_adrenaline");
-            }
-            else if(StrEqual(weaponid, "weapon_adrenaline", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 4);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_pain_pills");
-            }
-            //====SECONDARY=============
-            //====PISTOL================
-            else if(StrEqual(weaponid, "weapon_pistol", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 1);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_pistol_magnum");
-            }
-            else if(StrEqual(weaponid, "weapon_pistol_magnum", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 1);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_pistol");
-            }
-            //====PRIMARY================
-            //====SMG==================
-            else if(StrEqual(weaponid, "weapon_smg", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_smg_mp5");
-            }
-            else if(StrEqual(weaponid, "weapon_smg_mp5", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_smg_silenced");
-            }
-            else if(StrEqual(weaponid, "weapon_smg_silenced", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_smg");
-            }
-            //====SHOTGUN==============
-            else if(StrEqual(weaponid, "weapon_autoshotgun", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_pumpshotgun");
-            }
-            else if(StrEqual(weaponid, "weapon_pumpshotgun", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_shotgun_chrome");
-            }
-            else if(StrEqual(weaponid, "weapon_shotgun_chrome", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_shotgun_spas");
-            }
-            else if(StrEqual(weaponid, "weapon_shotgun_spas", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_autoshotgun");
-            }
-            //====RIFLE===================
-            else if(StrEqual(weaponid, "weapon_rifle", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_rifle_ak47");
-            }
-            else if(StrEqual(weaponid, "weapon_rifle_ak47", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_rifle_desert");
-            }
-            else if(StrEqual(weaponid, "weapon_rifle_desert", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_rifle_sg552");
-            }
-            else if(StrEqual(weaponid, "weapon_rifle_sg552", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_rifle_m60");
-            }
-            else if(StrEqual(weaponid, "weapon_rifle_m60", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_grenade_launcher");
-            }
-            else if(StrEqual(weaponid, "weapon_grenade_launcher", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_rifle");
-            }
-            //====SNIPER===================
-            else if(StrEqual(weaponid, "weapon_hunting_rifle", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_sniper_scout");
-            }
-            else if(StrEqual(weaponid, "weapon_sniper_scout"))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_sniper_awp");
-            }
-            else if(StrEqual(weaponid, "weapon_sniper_awp", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_sniper_military");
-            }
-            else if(StrEqual(weaponid, "weapon_sniper_military", false))
-            {
-                new ent = GetPlayerWeaponSlot(client, 0);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                CheatCommand(client, "give", "weapon_hunting_rifle");
-            }
-
-            //====MELEE================
-            else if(StrEqual(weaponid, "weapon_melee", false))
-            {
-                if(++MeleeNumber[client] > 10)
+                decl String:weaponid[64];
+                GetClientWeapon(client, weaponid, sizeof(weaponid));
+                //=====THROW============
+                if(StrEqual(weaponid, "weapon_molotov", false))
                 {
-                    MeleeNumber[client] = 0;
+                    new ent = GetPlayerWeaponSlot(client, 2);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_pipe_bomb");
                 }
-                new ent = GetPlayerWeaponSlot(client, 1);
-                if(ent != -1)   RemovePlayerItem(client, ent);
-                GetClientPosition(client, MeleeClass[MeleeNumber[client]]); //We can't give player melee weapon directly, but we can make items appear under their feet
+                else if(StrEqual(weaponid, "weapon_pipe_bomb", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 2);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_vomitjar");
+                }
+                else if(StrEqual(weaponid, "weapon_vomitjar", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 2);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_molotov");
+                }
+                //====MEDKIT==============
+                else if(StrEqual(weaponid, "weapon_first_aid_kit", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 3);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_defibrillator");
+                }
+                else if(StrEqual(weaponid, "weapon_defibrillator", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 3);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_upgradepack_incendiary");
+                }
+                else if(StrEqual(weaponid, "weapon_upgradepack_incendiary", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 3);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_upgradepack_explosive");
+                }
+                else if(StrEqual(weaponid, "weapon_upgradepack_explosive", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 3);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_first_aid_kit");
+                }
+                //====PILLS================
+                else if(StrEqual(weaponid, "weapon_pain_pills", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 4);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_adrenaline");
+                }
+                else if(StrEqual(weaponid, "weapon_adrenaline", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 4);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_pain_pills");
+                }
+                //====SECONDARY=============
+                //====PISTOL================
+                else if(StrEqual(weaponid, "weapon_pistol", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 1);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_pistol_magnum");
+                }
+                else if(StrEqual(weaponid, "weapon_pistol_magnum", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 1);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_pistol");
+                }
+                //====PRIMARY================
+                //====SMG==================
+                else if(StrEqual(weaponid, "weapon_smg", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_smg_mp5");
+                }
+                else if(StrEqual(weaponid, "weapon_smg_mp5", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_smg_silenced");
+                }
+                else if(StrEqual(weaponid, "weapon_smg_silenced", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_smg");
+                }
+                //====SHOTGUN==============
+                else if(StrEqual(weaponid, "weapon_autoshotgun", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_pumpshotgun");
+                }
+                else if(StrEqual(weaponid, "weapon_pumpshotgun", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_shotgun_chrome");
+                }
+                else if(StrEqual(weaponid, "weapon_shotgun_chrome", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_shotgun_spas");
+                }
+                else if(StrEqual(weaponid, "weapon_shotgun_spas", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_autoshotgun");
+                }
+                //====RIFLE===================
+                else if(StrEqual(weaponid, "weapon_rifle", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_rifle_ak47");
+                }
+                else if(StrEqual(weaponid, "weapon_rifle_ak47", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_rifle_desert");
+                }
+                else if(StrEqual(weaponid, "weapon_rifle_desert", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_rifle_sg552");
+                }
+                else if(StrEqual(weaponid, "weapon_rifle_sg552", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_rifle_m60");
+                }
+                else if(StrEqual(weaponid, "weapon_rifle_m60", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_grenade_launcher");
+                }
+                else if(StrEqual(weaponid, "weapon_grenade_launcher", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_rifle");
+                }
+                //====SNIPER===================
+                else if(StrEqual(weaponid, "weapon_hunting_rifle", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_sniper_scout");
+                }
+                else if(StrEqual(weaponid, "weapon_sniper_scout"))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_sniper_awp");
+                }
+                else if(StrEqual(weaponid, "weapon_sniper_awp", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_sniper_military");
+                }
+                else if(StrEqual(weaponid, "weapon_sniper_military", false))
+                {
+                    new ent = GetPlayerWeaponSlot(client, 0);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    CheatCommand(client, "give", "weapon_hunting_rifle");
+                }
+
+                //====MELEE================
+                else if(StrEqual(weaponid, "weapon_melee", false))
+                {
+                    if(++PlayerMeleeNum[client] > 10)
+                    {
+                        PlayerMeleeNum[client] = 0;
+                    }
+                    new ent = GetPlayerWeaponSlot(client, 1);
+                    if(ent != -1)   RemovePlayerItem(client, ent);
+                    GetClientPosition(client, MeleeClass[PlayerMeleeNum[client]]); //We can't give player melee weapon directly, but we can make items appear under their feet
+                }
+                IntervalRemain[client] = switch_interval;
+                return Plugin_Handled;
             }
-            COOLDOWN[client] = 2;
-            IsPlayerOnFighting[client] = true;
-            CreateTimer(1.0, Timer_CoolDown, client);
-            return Plugin_Handled;      
+        }
+        else if(!TimerRunning[client])
+        {
+            IntervalTimer[client] = CreateTimer(1.0, setInterval, client, TIMER_REPEAT);
+            TimerRunning[client] = true;
+            PrintHintText(client, "You need wait at least %d s for next change!", IntervalRemain[client]);
         }
     }
     return Plugin_Continue;
 }
 
-public Action:Timer_CoolDown(Handle:timer, any:client)
+public Action:OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &damagetype) 
 {
-    COOLDOWN[client] -= 1;
-    if(COOLDOWN[client] < 0)
+    int dmg_interval = GetConVarInt(DamageInterval);
+    if(damage)
     {
-        COOLDOWN[client] = 0;
-        IsPlayerOnFighting[client] = false;
-    }  
+        if(GetClientTeam(victim) == 2)
+        {
+            IntervalRemain[victim] = dmg_interval;
+        }
+        if(GetClientTeam(attacker) == 2)
+        {
+            IntervalRemain[attacker] = dmg_interval;
+        }
+    }
+}
+
+public Action:GetClientPosition(client, String:weaponid[32]){
+    if(client != 0)
+    {
+        decl Float:SpawnPosition[3], Float:SpawnAngle[3];
+        GetClientAbsOrigin(client, SpawnPosition);
+        SpawnPosition[2] += 20; SpawnAngle[0] = 90.0;
+        ChangeMelee(weaponid, SpawnPosition, SpawnAngle);
+    }
+}
+
+public Action:setInterval(Handle:timer, any:client)
+{
+    if(IntervalRemain[client] < 0)
+    {
+        KillTimer(timer);
+        TimerRunning[client] = false;
+        PrintHintText(client, "Next change ready!");
+    }
     else
     {
-        CreateTimer(1.0, Timer_CoolDown, client);
+        PrintCenterText(client, "%d s remain for change!", IntervalRemain[client]);
+        IntervalRemain[client] -= 1;
     }
 }
 
@@ -321,17 +338,6 @@ stock CheatCommand(Client, const String:command[], const String:arguments[])
     SetCommandFlags(command, flags);
     SetUserFlagBits(Client, admindata);
 }
-
-public Action:GetClientPosition(client, String:weaponid[32]){
-    if(client != 0)
-    {
-        decl Float:SpawnPosition[3], Float:SpawnAngle[3];
-        GetClientAbsOrigin(client, SpawnPosition);
-        SpawnPosition[2] += 20; SpawnAngle[0] = 90.0;
-        ChangeMelee(weaponid, SpawnPosition, SpawnAngle);
-    }
-}
-
 
 stock ChangeMelee(const String:Weapon[32], Float:Position[3], Float:Angle[3])
 {
