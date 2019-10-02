@@ -291,13 +291,19 @@ public Action:OnTakeDamage(victim, &attacker, &inflictor, &Float:damage, &damage
     int dmg_interval = GetConVarInt(DamageInterval);
     if(damage)
     {
-        if(GetClientTeam(victim) == 2)
+        if(IsClientInGame(victim) && !IsFakeClient(victim))
         {
-            IntervalRemain[victim] = dmg_interval;
+            if(GetClientTeam(victim) == 2)
+            {
+                IntervalRemain[victim] = dmg_interval;
+            }
         }
-        if(GetClientTeam(attacker) == 2)
+        if(IsClientInGame(attacker) && !IsFakeClient(attacker))
         {
-            IntervalRemain[attacker] = dmg_interval;
+            if(GetClientTeam(attacker) == 2)
+            {
+                IntervalRemain[attacker] = dmg_interval;
+            }
         }
     }
 }
@@ -322,7 +328,7 @@ public Action:setInterval(Handle:timer, any:client)
     }
     else
     {
-        PrintCenterText(client, "%d s remain for change!", IntervalRemain[client]);
+        PrintCenterText(client, "%d s remain for next change!", IntervalRemain[client]);
         IntervalRemain[client] -= 1;
     }
 }
